@@ -1,12 +1,12 @@
 {
   "mcpServers": {
     "wordpress": {
-      "command": "node",
-      "args": ["<path-to>/mcp-wordpress-server/build/index.js"],
+      "command": "npx",
+      "args": ["-y", "github:cloudbuilders-jp/mcp-wordpress-server"],
       "env": {
-        "WORDPRESS_URL": "<your-wordpress-url>",
-        "WORDPRESS_USERNAME": "<your-username>",
-        "WORDPRESS_APP_PASSWORD": "<your-app-password>"
+        "WORDPRESS_URL": "https://www.cloudbuilders.jp/",
+        "WORDPRESS_USERNAME": "${env:WORDPRESS_USERNAME}",
+        "WORDPRESS_APP_PASSWORD": "${env:WORDPRESS_APP_PASSWORD}"
       }
     }
   }
