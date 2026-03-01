@@ -2,6 +2,11 @@
 
 技術ブログの検証と執筆を行うためのテンプレートリポジトリです。
 
+## 前提
+
+- **Node.js** — WordPress MCP サーバーの実行に必要
+- **uv** — アイキャッチ画像生成スクリプト等の Python ツール実行に必要（https://docs.astral.sh/uv/）
+
 ## セットアップ
 
 1. GitHub で「Use this template」からリポジトリを作成し、clone する
@@ -47,6 +52,7 @@ blog/                          # ブログ記事
     images/                    # 記事用の画像
 .mcp.json                      # Claude Code用MCP設定
 .agents/skills/cb-blog/        # ブログ執筆スキル（Cursor はここを直接読む）
+.agents/skills/eyecatch/       # アイキャッチ画像生成スキル
 .claude/skills -> .agents/skills  # Claude Code 用シンボリックリンク
 .cursor/
   mcp.json                     # Cursor用MCP設定
