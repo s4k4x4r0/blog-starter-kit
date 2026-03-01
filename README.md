@@ -5,7 +5,7 @@
 ## 使い方
 
 1. このテンプレートからリポジトリを作成する
-2. MCP設定を更新する（`.claude/mcp.json` と `.cursor/mcp.json`）
+2. MCP設定を更新する（`.mcp.json` と `.cursor/mcp.json`）
 3. Claude Code または Cursor で `/cb-blog` スキルを使う
 
 ## スキルの使い方
@@ -29,9 +29,9 @@ blog/                          # ブログ記事
   <article-id>/
     draft.md                   # 記事の下書き
     images/                    # 記事用の画像
-.claude/
-  skills/cb-blog/              # ブログ執筆スキル
-  mcp.json                     # Claude Code用MCP設定
+.mcp.json                      # Claude Code用MCP設定
+.agents/skills/cb-blog/        # ブログ執筆スキル
+.claude/skills -> .agents/skills  # Claude Code用シンボリックリンク
 .cursor/
   mcp.json                     # Cursor用MCP設定
 ```

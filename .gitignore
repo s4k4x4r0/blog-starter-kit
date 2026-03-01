@@ -1,6 +1,5 @@
-# MCP credentials (uncomment if mcp.json contains real credentials)
-# .claude/mcp.json
-# .cursor/mcp.json
+# Credentials
+.env
 
 # OS
 .DS_Store
