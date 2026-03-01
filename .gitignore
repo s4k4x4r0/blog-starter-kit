@@ -1,0 +1,14 @@
+# MCP credentials (uncomment if mcp.json contains real credentials)
+# .claude/mcp.json
+# .cursor/mcp.json
+
+# OS
+.DS_Store
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# Claude Code local settings
+.claude/settings.local.json
