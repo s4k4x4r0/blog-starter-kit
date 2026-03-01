@@ -47,4 +47,4 @@
 
 ## phase の更新
 
-下書きが完成したら `phase: draft` -> `phase: review` に更新してください。
+下書きが完成したら `phase` は `draft` のままにしてください。WordPress投稿後に `posted` に変わります。

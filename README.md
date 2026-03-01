@@ -39,11 +39,10 @@ blog/                          # ブログ記事
 ## ワークフロー
 
 ```
-idea -> poc -> draft -> review -> published
+idea -> poc -> draft -> posted
 ```
 
 1. **idea**: 記事のアイデアを練る
 2. **poc**: 技術検証を実施する（検証結果は NOTES.md に記録される）
 3. **draft**: 検証結果からブログ記事を書く
-4. **review**: 記事をレビューする
-5. **published**: WordPressに投稿する
+4. **posted**: WordPressに下書き投稿する（以降のレビュー・公開はWordPress側で行う）

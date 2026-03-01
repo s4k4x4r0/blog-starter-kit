@@ -2,8 +2,8 @@
 
 ## 前提
 
-WordPress MCP サーバーが設定済みであること。
-MCP設定は `.claude/mcp.json` または `.cursor/mcp.json` を参照してください。
+WordPress MCP サーバーが利用可能であること。
+MCP ツール（`create_post` 等）が使えない場合は、[references/mcp-setup.md](mcp-setup.md) を参照してユーザーに設定を案内してください。
 
 ## やること
 
@@ -29,9 +29,5 @@ MCP の記事作成機能を使用して投稿する。
 ### 3. 投稿後
 
 - ユーザーに投稿URLを伝える
-- `project.yaml` の `phase` を `published` に更新する
-- 必要に応じて `wordpress_post_id` を `project.yaml` に記録する
-
-## phase の更新
-
-投稿完了後 `phase: review` -> `phase: published` に更新してください。
+- `project.yaml` の `phase` を `posted` に更新する
+- `project.yaml` に `wordpress_post_id` を記録する

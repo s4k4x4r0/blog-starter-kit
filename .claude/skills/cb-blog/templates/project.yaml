@@ -1,8 +1,0 @@
-title: "プロジェクトタイトル"
-repository: ""
-articles:
-  - id: 01-example
-    title: "記事タイトル"
-    phase: idea  # idea -> poc -> draft -> review -> published
-    tags: []
-created: ""

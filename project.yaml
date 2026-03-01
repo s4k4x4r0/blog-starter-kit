@@ -1,4 +1,5 @@
-title: ""
-repository: ""
+# プロジェクト全体の情報
+title: ""              # プロジェクトのタイトル（例: "Lambda Durable Function検証"）
+
+# 記事一覧（複数記事を管理できる）
 articles: []
-created: ""

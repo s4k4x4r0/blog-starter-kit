@@ -41,5 +41,5 @@ argument-hint: <やりたいこと>
 アクション実行後、必要に応じて `project.yaml` の `phase` を更新してください。
 
 ```
-phase の遷移: idea → poc → draft → review → published
+phase の遷移: idea → poc → draft → posted
 ```
