@@ -17,29 +17,14 @@ argument-hint: <やりたいこと>
 
 ## アクションの判断
 
-ユーザーの指示に応じて、以下のいずれかを実行してください。
+`$ARGUMENTS` と現在の `phase` をもとに、実行するアクションを決定してください。
 判断に迷ったらユーザーに確認してください。
 
-### アイデア・企画
-ユーザーが記事のネタや方向性を相談したい場合。
-詳細は [references/ideation.md](references/ideation.md) を参照してください。
+| ユーザーの意図 | 参照ファイル | phase 遷移 |
+|---|---|---|
+| ネタ相談、アイデア出し、方向性の議論 | [ideation.md](references/ideation.md) | → `idea` → `poc` |
+| 検証計画、PoC設計 | [poc-planning.md](references/poc-planning.md) | `poc` のまま |
+| 記事を書く、下書き作成 | [writing.md](references/writing.md) | → `draft` |
+| WordPressに投稿 | [publishing.md](references/publishing.md) | → `posted` |
 
-### 検証計画
-ユーザーが技術検証の計画を立てたい場合。
-詳細は [references/poc-planning.md](references/poc-planning.md) を参照してください。
-
-### 記事執筆
-ユーザーが検証結果をブログ記事にしたい場合。
-詳細は [references/writing.md](references/writing.md) を参照してください。
-
-### WordPress投稿
-ユーザーがブログ記事をWordPressに投稿したい場合。
-詳細は [references/publishing.md](references/publishing.md) を参照してください。
-
-## 状態管理
-
-アクション実行後、必要に応じて `project.yaml` の `phase` を更新してください。
-
-```
-phase の遷移: idea → poc → draft → posted
-```
+phase の遷移: `idea → poc → draft → posted`

@@ -2,13 +2,29 @@
 
 技術ブログの検証と執筆を行うためのテンプレートリポジトリです。
 
+## セットアップ
+
+1. GitHub で「Use this template」からリポジトリを作成し、clone する
+2. WordPress のアプリケーションパスワードを発行する（詳細は `.agents/skills/cb-blog/references/mcp-setup.md`）
+3. `.env` ファイルを作成する:
+   ```bash
+   cp .env.example .env
+   ```
+   `.env` に WordPress の認証情報を記入する
+4. エディタを再起動する（Claude Code: ターミナル再起動、Cursor: アプリ再起動）
+
+### Windows の場合
+
+`.claude/skills` は `.agents/skills` へのシンボリックリンクです。
+Windows 環境ではシンボリックリンクが正しく展開されない場合があります。
+その場合は以下のいずれかで対応してください:
+
+- WSL2 上で作業する（推奨）
+- `.claude/skills/` を削除し、`.agents/skills/` の内容をコピーする
+
 ## 使い方
 
-1. このテンプレートからリポジトリを作成する
-2. MCP設定を更新する（`.mcp.json` と `.cursor/mcp.json`）
-3. Claude Code または Cursor で `/cb-blog` スキルを使う
-
-## スキルの使い方
+Claude Code または Cursor で `/cb-blog` スキルを使います。
 
 ```
 /cb-blog ネタを相談したい。〇〇について
@@ -30,8 +46,8 @@ blog/                          # ブログ記事
     draft.md                   # 記事の下書き
     images/                    # 記事用の画像
 .mcp.json                      # Claude Code用MCP設定
-.agents/skills/cb-blog/        # ブログ執筆スキル
-.claude/skills -> .agents/skills  # Claude Code用シンボリックリンク
+.agents/skills/cb-blog/        # ブログ執筆スキル（Cursor はここを直接読む）
+.claude/skills -> .agents/skills  # Claude Code 用シンボリックリンク
 .cursor/
   mcp.json                     # Cursor用MCP設定
 ```
