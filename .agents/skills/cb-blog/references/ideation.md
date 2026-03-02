@@ -9,7 +9,7 @@
    - 差別化ポイント（既存記事との違いは？）
    - 検証で確認すべきこと
 3. 議論の結果を `project.yaml` に反映する
-4. 必要に応じて `blog/` に記事ディレクトリを作成する
+4. 議論の結論を `NOTES.md` の `## 企画` セクションに記録する
 
 ## project.yaml の更新例
 
@@ -18,18 +18,18 @@ articles:
   - id: 01-getting-started
     title: "記事タイトル"
     phase: idea
-    tags: [タグ1, タグ2]
 ```
 
-## 記事ディレクトリの作成
+## NOTES.md への記録
 
-```
-blog/<article-id>/
-├── draft.md
-└── images/
-```
+`## 企画` セクションに、以下の議論結果を記録してください:
 
-`draft.md` は [templates/draft.md](../templates/draft.md) をコピーして作成してください。
+- 読者ターゲット
+- 記事のゴール
+- 差別化ポイント
+- 検証で確認すべきこと
+
+これらは後続の検証計画・記事執筆で参照されます。
 
 ## phase の更新
 
