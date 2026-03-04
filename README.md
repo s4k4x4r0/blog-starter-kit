@@ -6,6 +6,7 @@
 
 - **Node.js** — WordPress MCP サーバーの実行に必要
 - **uv** — アイキャッチ画像生成スクリプト等の Python ツール実行に必要（https://docs.astral.sh/uv/）
+- **agent-browser** (推奨) — ブラウザのスクリーンショット撮影に使用（https://github.com/vercel-labs/agent-browser）
 
 ## セットアップ
 

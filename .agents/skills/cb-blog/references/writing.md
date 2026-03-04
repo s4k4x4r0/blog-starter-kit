@@ -26,6 +26,21 @@
 - 画像は `blog/<article-id>/images/` に配置する
 - Markdown内では相対パスで参照する: `![説明](images/xxx.png)`
 - WordPress MCP が自動でアップロード・URL置換する
+- 命名規則は `AGENTS.md` の「スクリーンショット画像」セクションを参照
+
+#### POC の画像を記事に使う場合
+
+`poc/images/` から `blog/<article-id>/images/` にコピーしてください。
+`NOTES.md` で `-> ブログ:` マーカーが付いた画像を確認し、記事に必要なものを選んでください。
+
+#### 記事用スクリーンショットの撮影
+
+記事用のスクリーンショットは直接 `blog/<article-id>/images/` に保存してください:
+
+```bash
+agent-browser open "http://localhost:3000"
+agent-browser screenshot blog/<article-id>/images/result-screen.png
+```
 
 ### リンク
 

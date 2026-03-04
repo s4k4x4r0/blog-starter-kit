@@ -51,6 +51,29 @@ blog/           # ブログ記事（記事ごとにサブディレクトリ）
 - コードを読めばわかること
 - 些末な作業ログ（ファイル作成、依存追加など）
 
+### スクリーンショット画像
+
+スクリーンショットの保存先:
+
+- POC 中 → `poc/images/`
+- 記事用 → `blog/<article-id>/images/`
+
+命名は説明的な名前を使い、連番は使わないでください:
+
+- 良い例: `grafana-dashboard-overview.png`, `error-log-detail.png`
+- 悪い例: `screenshot1.png`, `image_01.png`
+
+スクリーンショットを撮ったら `NOTES.md` に記録し、`-> ブログ:` マーカーで用途を併記してください:
+
+```markdown
+### 2025-01-15: Grafana ダッシュボードの確認
+- ダッシュボードの全体像をスクリーンショットで記録 → `poc/images/grafana-dashboard-overview.png`
+- -> ブログ: ダッシュボードの完成形として記事冒頭に使う
+```
+
+スクリーンショットの撮影には agent-browser の利用を推奨します（必須ではありません）。
+未導入の場合は [agent-browser-setup.md](.agents/skills/cb-blog/references/agent-browser-setup.md) を参照してセットアップしてください。
+
 ## コミットルール
 
 - 検証コードのコミットは通常通り行ってください
