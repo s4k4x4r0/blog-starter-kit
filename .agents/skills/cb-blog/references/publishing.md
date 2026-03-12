@@ -55,6 +55,7 @@ MCP の記事作成機能を使用して投稿する。
 - Markdown から Gutenberg ブロックへの変換は MCP サーバーが自動で行う
 - 本文中の画像（`![alt](images/xxx.png)`）は MCP サーバーが自動でアップロード・URL置換するため、手動アップロードは不要
 - アイキャッチ画像がある場合は `featured_media` に media ID を指定する
+- 外部リンクは URL をそのまま独立した段落に記述する（WordPress 側で自動的にカード形式で表示される）。`[blogcard url="..."]` 形式は使わないこと（Gutenberg 変換時にエスケープされて壊れるため）
 
 ### 5. 投稿後
 
