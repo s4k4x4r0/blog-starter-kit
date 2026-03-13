@@ -248,12 +248,33 @@ def wrap_text(text: str, font: ImageFont.FreeTypeFont, max_width: int) -> list[s
     return _balance_lines(text, font, max_width)
 
 
+def parse_color(color_str: str) -> tuple[int, int, int, int]:
+    """色指定文字列をRGBAタプルに変換する。"""
+    s = color_str.strip().lower()
+    named = {"white": (255, 255, 255, 255), "black": (0, 0, 0, 255)}
+    if s in named:
+        return named[s]
+    if s.startswith("#"):
+        h = s.lstrip("#")
+        if len(h) == 3:
+            h = "".join(c * 2 for c in h)
+        r, g, b = int(h[0:2], 16), int(h[2:4], 16), int(h[4:6], 16)
+        return (r, g, b, 255)
+    if "," in s:
+        parts = [int(x.strip()) for x in s.split(",")]
+        if len(parts) == 3:
+            return (parts[0], parts[1], parts[2], 255)
+        return (parts[0], parts[1], parts[2], parts[3])
+    raise ValueError(f"不正な色指定: {color_str}")
+
+
 def generate_eyecatch(
     base_path: str,
     title: str,
     output_path: str,
     font_path: Path,
     font_size: int = DEFAULT_FONT_SIZE,
+    text_color: tuple[int, int, int, int] = DEFAULT_TEXT_COLOR,
 ) -> None:
     """アイキャッチ画像を生成する。"""
     img = Image.open(base_path).convert("RGBA")
@@ -278,7 +299,7 @@ def generate_eyecatch(
     y = (height - total_text_height) // 2
     for i, line in enumerate(lines):
         x = (width - line_widths[i]) // 2 - line_x_offsets[i]
-        draw.text((x, y - line_y_offsets[i]), line, font=font, fill=DEFAULT_TEXT_COLOR)
+        draw.text((x, y - line_y_offsets[i]), line, font=font, fill=text_color)
         y += line_heights[i] + line_spacing
 
     img = img.convert("RGB")
@@ -301,6 +322,11 @@ def main():
         type=int,
         default=DEFAULT_FONT_SIZE,
         help=f"フォントサイズ (default: {DEFAULT_FONT_SIZE})",
+    )
+    parser.add_argument(
+        "--color",
+        default=None,
+        help="テキスト色 (例: 'white', '#ffffff', '255,255,255')",
     )
 
     args = parser.parse_args()
@@ -326,7 +352,8 @@ def main():
     if output_dir != Path("."):
         output_dir.mkdir(parents=True, exist_ok=True)
 
-    generate_eyecatch(args.base, args.title, args.output, font_path, args.size)
+    text_color = parse_color(args.color) if args.color else DEFAULT_TEXT_COLOR
+    generate_eyecatch(args.base, args.title, args.output, font_path, args.size, text_color)
 
 
 if __name__ == "__main__":

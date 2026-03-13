@@ -18,19 +18,28 @@ argument-hint: <記事タイトル or やりたいこと>
 4. **生成された画像を Read ツールで確認する**
 5. 問題があればパラメータを調整して再生成する
 
+## ベース画像
+
+| ファイル | 背景 | テキスト色 |
+|---|---|---|
+| `assets/eyecatch.base.forest.png` | 明るい（森・自然のイラスト） | 濃いグレー（デフォルト） |
+| `assets/eyecatch.base.cyber.png` | 暗い（紫・テック系の幾何学模様） | `--color white` を指定 |
+
 ## スクリプトの実行
 
 プロジェクトルートから実行する:
 
 ```bash
 uv run .agents/skills/eyecatch/scripts/make_eyecatch.py \
-  .agents/skills/eyecatch/assets/eyecatch.base.png \
+  .agents/skills/eyecatch/assets/eyecatch.base.forest.png \
   "タイトルテキスト" \
   出力先パス \
-  [--size フォントサイズ]
+  [--size フォントサイズ] \
+  [--color テキスト色]
 ```
 
 `--size` のデフォルトは 64px。
+`--color` は `white`, `#ffffff`, `255,255,255` 等の形式で指定可能。デフォルトは濃いグレー。
 
 ### 改行位置の指定
 
@@ -40,7 +49,7 @@ uv run .agents/skills/eyecatch/scripts/make_eyecatch.py \
 ```bash
 # シェルで \n を渡すには $'...' 記法を使う
 uv run .agents/skills/eyecatch/scripts/make_eyecatch.py \
-  .agents/skills/eyecatch/assets/eyecatch.base.png \
+  .agents/skills/eyecatch/assets/eyecatch.base.forest.png \
   $'GitHub Actionsで実現する\nCI/CDパイプラインの自動化' \
   eyecatch.png
 ```
