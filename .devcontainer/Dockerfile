@@ -1,5 +1,9 @@
 FROM mcr.microsoft.com/devcontainers/base:debian-12
 
+# ============================================================
+# root: システムパッケージとグローバルバイナリ
+# ============================================================
+
 # Node.js LTS (NodeSource APTリポジトリ)
 ARG NODE_MAJOR=22
 RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key \
@@ -13,19 +17,28 @@ RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key \
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /usr/local/bin/
 ENV UV_LINK_MODE=copy
 
+# AWS CLI v2 (公式インストーラー)
+RUN ARCH=$(uname -m) \
+    && curl "https://awscli.amazonaws.com/awscli-exe-linux-${ARCH}.zip" -o "awscliv2.zip" \
+    && unzip awscliv2.zip \
+    && ./aws/install \
+    && rm -rf awscliv2.zip aws
+
+# agent-browser + Chromium (グローバルインストール + システム依存)
+RUN npm install -g agent-browser \
+    && npx -y playwright install --with-deps chromium
+
+# ============================================================
+# vscode: ユーザーレベルのツール
+# ============================================================
+USER vscode
+
 # Python
 RUN uv python install 3.13
 
 # pre-commit
 RUN uv tool install pre-commit
-ENV PATH="/root/.local/bin:$PATH"
 
 # Claude Code (公式インストーラー)
-# WORKDIR を設定しないと root の / スキャンでハングする
-WORKDIR /tmp
-RUN curl -fsSL https://claude.ai/install.sh | bash
-WORKDIR /
-
-# agent-browser + Chromium
-RUN npm install -g agent-browser \
-    && npx -y playwright install --with-deps chromium
+# WORKDIRが / だとスキャンでハングするため専用の一時ディレクトリで実行する
+RUN WORK=$(mktemp -d) && cd "$WORK" && curl -fsSL https://claude.ai/install.sh | bash && rm -rf "$WORK"
