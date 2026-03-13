@@ -17,3 +17,6 @@
 __pycache__/
 
 .tmp/
+
+# Third-party skills (installed via skills-lock.json)
+.agents/skills/agent-browser/

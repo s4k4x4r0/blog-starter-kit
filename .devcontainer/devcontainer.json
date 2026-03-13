@@ -1,0 +1,7 @@
+{
+  "name": "cb-blog-template",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "postCreateCommand": ".devcontainer/post-create.sh"
+}
