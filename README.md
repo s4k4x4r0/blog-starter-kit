@@ -11,7 +11,7 @@
 ## セットアップ
 
 1. GitHub で「Use this template」からリポジトリを作成し、clone する
-2. WordPress のアプリケーションパスワードを発行する（詳細は `.agents/skills/cb-blog/references/mcp-setup.md`）
+2. WordPress のアプリケーションパスワードを発行する（詳細は `.agents/references/mcp-setup.md`）
 3. `.env` ファイルを作成する:
    ```bash
    cp .env.example .env
@@ -30,13 +30,14 @@ Windows 環境ではシンボリックリンクが正しく展開されない場
 
 ## 使い方
 
-Claude Code または Cursor で `/cb-blog` スキルを使います。
+Claude Code または Cursor で、ブログに関する作業を依頼してください。
+エージェントが `AGENTS.md` のワークフローに従って対応します。
 
 ```
-/cb-blog ネタを相談したい。〇〇について
-/cb-blog 検証計画を立てたい
-/cb-blog 記事を書いて
-/cb-blog WordPressに投稿して
+ネタを相談したい。〇〇について
+検証計画を立てたい
+記事を書いて
+WordPressに投稿して
 ```
 
 ## ディレクトリ構造
@@ -52,8 +53,10 @@ blog/                          # ブログ記事
     draft.md                   # 記事の下書き
     images/                    # 記事用の画像
 .mcp.json                      # Claude Code用MCP設定
-.agents/skills/cb-blog/        # ブログ執筆スキル（Cursor はここを直接読む）
-.agents/skills/eyecatch/       # アイキャッチ画像生成スキル
+.agents/
+  references/                  # ワークフロー詳細ドキュメント
+  templates/                   # 記事テンプレート
+  skills/                      # スキル（eyecatch, screenshot等）
 .claude/skills -> .agents/skills  # Claude Code 用シンボリックリンク
 .cursor/
   mcp.json                     # Cursor用MCP設定

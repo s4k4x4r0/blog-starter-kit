@@ -21,6 +21,21 @@ blog/           # ブログ記事（記事ごとにサブディレクトリ）
 
 これにより、前のセッションからの作業をスムーズに引き継げます。
 
+## ワークフロー
+
+記事の状態は `project.yaml` の `phase` で管理します。ユーザーの意図と現在の phase に応じて、適切なアクションを実行してください。判断に迷ったらユーザーに確認してください。
+
+| ユーザーの意図 | 参照ファイル | phase 遷移 |
+|---|---|---|
+| ネタ相談、アイデア出し、方向性の議論 | [ideation.md](.agents/references/ideation.md) | → `idea` → `poc` |
+| 検証計画、PoC設計 | [poc-planning.md](.agents/references/poc-planning.md) | `poc` のまま |
+| 記事を書く、下書き作成 | [writing.md](.agents/references/writing.md) | → `draft` |
+| WordPressに投稿 | [publishing.md](.agents/references/publishing.md) | → `posted` |
+
+phase の遷移: `idea → poc → draft → posted`
+
+各フェーズの詳細な手順は参照ファイルに従ってください。
+
 ## 検証記録のルール
 
 検証作業中は、結果を `NOTES.md` に時系列で追記してください。

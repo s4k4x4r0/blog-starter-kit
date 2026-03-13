@@ -8,7 +8,7 @@
    - `project.yaml`（記事のメタ情報）
 2. `blog/<article-id>/draft.md` のテンプレートに沿って記事を書く
 
-テンプレート: [templates/draft.md](../templates/draft.md)
+テンプレート: [templates/draft.md](../templates/draft.md) （`.agents/templates/draft.md`）
 テンプレートはユーザーが自由にカスタマイズしている可能性があります。テンプレートの構成に従ってください。
 テンプレート内の HTML コメント（`<!-- ... -->`）にはユーザーからの指示が書かれています。各セクションに何を書くべきかの指針になるので、コメントの内容に従って執筆してください。
 
