@@ -15,3 +15,5 @@
 # Python tools cache
 .ruff_cache/
 __pycache__/
+
+.tmp/

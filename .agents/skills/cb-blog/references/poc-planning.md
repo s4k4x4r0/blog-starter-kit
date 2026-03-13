@@ -28,17 +28,8 @@ poc/
 
 ### スクリーンショット
 
-検証中のスクリーンショットは `poc/images/` に保存してください。
-命名規則は `AGENTS.md` の「スクリーンショット画像」セクションに従ってください。
-
-agent-browser でスクリーンショットを撮る例:
-
-```bash
-agent-browser open "http://localhost:3000/dashboard"
-agent-browser screenshot poc/images/dashboard-initial-state.png
-```
-
-撮影後は `NOTES.md` に記録してください。
+`AGENTS.md` の「スクリーンショット画像」セクションに従うこと。
+撮影には `screenshot` スキルを使用する。
 
 ## 機密情報の漏洩防止
 

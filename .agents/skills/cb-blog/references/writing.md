@@ -35,12 +35,7 @@
 
 #### 記事用スクリーンショットの撮影
 
-記事用のスクリーンショットは直接 `blog/<article-id>/images/` に保存してください:
-
-```bash
-agent-browser open "http://localhost:3000"
-agent-browser screenshot blog/<article-id>/images/result-screen.png
-```
+撮影には `screenshot` スキルを使用する。
 
 ### リンク
 

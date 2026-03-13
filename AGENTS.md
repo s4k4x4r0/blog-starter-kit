@@ -71,8 +71,8 @@ blog/           # ブログ記事（記事ごとにサブディレクトリ）
 - -> ブログ: ダッシュボードの完成形として記事冒頭に使う
 ```
 
-スクリーンショットの撮影には agent-browser の利用を推奨します（必須ではありません）。
-未導入の場合は [agent-browser-setup.md](.agents/skills/cb-blog/references/agent-browser-setup.md) を参照してセットアップしてください。
+スクリーンショットの撮影には `screenshot` スキルを使用してください。
+agent-browser のセットアップ確認、撮影、機密情報のマスク処理まで対応しています。
 
 ## コミットルール
 
