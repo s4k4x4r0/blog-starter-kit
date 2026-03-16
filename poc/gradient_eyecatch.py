@@ -102,10 +102,11 @@ def generate_gradient_colors(
     if style == "warm_spread":
         # ブランドカラーから色相を+60°〜+140°回転させた暖色グラデーション
         # 例: 紫(274°) → ピンク(334°) 〜 黄色(54°)
+        # 明度を高めに設定し、濃い色のアイコン/テキストとのコントラストを確保
         h1 = (h + 60) % 360
         h2 = (h + 140) % 360
-        c1 = hsl_to_rgb(h1, 0.65, 0.73)
-        c2 = hsl_to_rgb(h2, 0.70, 0.83)
+        c1 = hsl_to_rgb(h1, 0.55, 0.80)
+        c2 = hsl_to_rgb(h2, 0.50, 0.90)
 
     elif style == "analogous":
         # 類似色: H±30°, 明度を上げてパステル寄りに
@@ -231,7 +232,7 @@ def draw_title(
     draw = ImageDraw.Draw(img)
     font = ImageFont.truetype(str(font_path), font_size)
     width, height = img.size
-    max_text_width = int(width * 0.80)
+    max_text_width = int(width * 0.65)
 
     # テキスト折り返し（\n対応）
     if "\n" in title:
@@ -253,9 +254,10 @@ def draw_title(
     line_spacing = int(font_size * 0.4)
     total_text_height = sum(line_heights) + line_spacing * (len(lines) - 1)
 
-    # テキストは画像下半分の中央に配置
-    text_area_top = height * 0.48 + y_offset
-    y = int(text_area_top + (height * 0.52 - total_text_height) / 2 - y_offset)
+    # テキストは画像下半分(45%〜95%)の中央に配置
+    text_area_top = height * 0.45
+    text_area_bottom = height * 0.95
+    y = int(text_area_top + (text_area_bottom - text_area_top - total_text_height) / 2)
 
     for i, line in enumerate(lines):
         x = (width - line_widths[i]) // 2 - line_x_offsets[i]
@@ -316,9 +318,9 @@ def generate_eyecatch(
     render_color = icon_color or brand_hex
     icon_img = svg_to_png(svg_data, ICON_SIZE, ICON_SIZE, color=render_color)
 
-    # アイコンを画像上部中央に配置
+    # アイコンを上1/3の中央に配置
     icon_x = (IMAGE_WIDTH - ICON_SIZE) // 2
-    icon_y = int(IMAGE_HEIGHT * 0.08)
+    icon_y = int(IMAGE_HEIGHT * 0.33 / 2 - ICON_SIZE / 2 + IMAGE_HEIGHT * 0.05)
     img.paste(icon_img, (icon_x, icon_y), icon_img)
 
     # 5. タイトルテキストの描画
