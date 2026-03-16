@@ -64,7 +64,7 @@ DEFAULT_FONT_CACHE = Path.home() / ".cache" / "eyecatch-fonts"
 IMAGE_WIDTH = 1200
 IMAGE_HEIGHT = 630
 ICON_SIZE = 200
-DEFAULT_FONT_SIZE = 56
+DEFAULT_FONT_SIZE = 48
 
 
 def hex_to_rgb(hex_color: str) -> tuple[int, int, int]:
@@ -232,17 +232,21 @@ def draw_title(
     draw = ImageDraw.Draw(img)
     font = ImageFont.truetype(str(font_path), font_size)
     width, height = img.size
-    max_text_width = int(width * 0.65)
+    max_text_width = int(width * 0.72)
 
-    # テキスト折り返し（\n対応）
+    # テキスト折り返し（\n対応、幅超過時は自動折り返し）
     if "\n" in title:
         lines = []
         for seg in title.split("\n"):
             seg = seg.strip()
-            if seg:
+            if not seg:
+                continue
+            bb = font.getbbox(seg)
+            if bb[2] - bb[0] <= max_text_width:
                 lines.append(seg)
+            else:
+                lines.extend(_simple_wrap(seg, font, max_text_width))
     else:
-        # 簡易折り返し
         lines = _simple_wrap(title, font, max_text_width)
 
     # 描画位置の計算
@@ -254,9 +258,9 @@ def draw_title(
     line_spacing = int(font_size * 0.4)
     total_text_height = sum(line_heights) + line_spacing * (len(lines) - 1)
 
-    # テキストは画像下半分(45%〜95%)の中央に配置
-    text_area_top = height * 0.45
-    text_area_bottom = height * 0.95
+    # テキストは画像の55%〜92%の領域に中央配置
+    text_area_top = height * 0.55
+    text_area_bottom = height * 0.92
     y = int(text_area_top + (text_area_bottom - text_area_top - total_text_height) / 2)
 
     for i, line in enumerate(lines):
@@ -318,9 +322,9 @@ def generate_eyecatch(
     render_color = icon_color or brand_hex
     icon_img = svg_to_png(svg_data, ICON_SIZE, ICON_SIZE, color=render_color)
 
-    # アイコンを上1/3の中央に配置
+    # アイコンの中心を画像高さの30%に配置
     icon_x = (IMAGE_WIDTH - ICON_SIZE) // 2
-    icon_y = int(IMAGE_HEIGHT * 0.33 / 2 - ICON_SIZE / 2 + IMAGE_HEIGHT * 0.05)
+    icon_y = int(IMAGE_HEIGHT * 0.30 - ICON_SIZE / 2)
     img.paste(icon_img, (icon_x, icon_y), icon_img)
 
     # 5. タイトルテキストの描画
