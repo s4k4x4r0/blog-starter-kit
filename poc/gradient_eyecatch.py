@@ -255,7 +255,7 @@ def draw_title(
 
     # テキストは画像下半分の中央に配置
     text_area_top = height * 0.48 + y_offset
-    y = int(text_area_top + (height * 0.52 - total_text_height) / 2 - y_offset)
+    y = int(text_area_top + (height * 0.52 - total_text_height) / 2)
 
     for i, line in enumerate(lines):
         x = (width - line_widths[i]) // 2 - line_x_offsets[i]
