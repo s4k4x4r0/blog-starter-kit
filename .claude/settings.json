@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".agents/hooks/textlint-draft.sh",
+            "timeout": 60
+          }
+        ]
+      }
+    ]
+  }
+}

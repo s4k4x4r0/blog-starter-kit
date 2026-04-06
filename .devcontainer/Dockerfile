@@ -28,6 +28,12 @@ RUN ARCH=$(uname -m) \
 RUN npm install -g agent-browser \
     && npx -y playwright install --with-deps chromium
 
+# textlint (グローバルインストール — hooks/textlint-draft.sh で使用)
+RUN npm install -g \
+    textlint \
+    textlint-rule-preset-ja-technical-writing \
+    @textlint-ja/textlint-rule-preset-ai-writing
+
 # ============================================================
 # vscode: ユーザーレベルのツール
 # ============================================================
