@@ -1,12 +1,37 @@
 # cb-blog-template
 
-技術ブログの検証と執筆を行うためのテンプレートリポジトリです。
+AIエージェントと対話するだけで、技術ブログの企画から WordPress 投稿までできるテンプレートリポジトリです。
 
-## 前提
+## 会話イメージ
 
-- **Node.js** — WordPress MCP サーバーの実行に必要
-- **uv** — アイキャッチ画像生成スクリプト等の Python ツール実行に必要（https://docs.astral.sh/uv/）
-- **agent-browser** (推奨) — ブラウザのスクリーンショット撮影に使用（https://github.com/vercel-labs/agent-browser）
+```
+👤 Lambda の Durable Functions が気になってる
+
+🤖 どのような記事にしたいですか？
+   検証したいこと、興味があること、何でも自由に教えてください。
+   それをもとに、私が読者ターゲット・記事のゴール・差別化ポイント・
+   検証で確認すべきことを整理します。
+
+👤 Step Functions 使ってる人が「これ Lambda だけでできるんだ」ってなる記事がいいな
+
+🤖 企画を整理しました。
+   - 読者ターゲット: AWS で Step Functions を使っているエンジニア
+   - 記事のゴール: Durable Functions で同等のワークフローが組めるか判断できる
+   - 差別化ポイント: 同じワークフローを両方で実装し比較する
+   - 検証で確認すべきこと: タスクチェイン・エラーハンドリング・コスト
+   この企画案でいかがでしょうか？
+   よければ、次は検証計画を決めていきます。
+
+👤 いいね、進めて
+
+   ... 検証計画の策定 → PoC 実行 → 記事執筆 → WordPress 投稿 ...
+
+🤖 投稿しました。
+   - 投稿URL: https://example.com/?p=1234
+   - ステータス: 下書き（公開は WordPress 管理画面から行ってください）
+```
+
+エージェントが企画・検証・執筆・投稿の各フェーズを主導し、次に何をすべきかを案内します。あなたはアイデアを話して、フィードバックするだけ。
 
 ## セットアップ
 
@@ -19,56 +44,19 @@
    `.env` に WordPress の認証情報を記入する
 4. エディタを再起動する（Claude Code: ターミナル再起動、Cursor: アプリ再起動）
 
-### Windows の場合
+## 推奨環境
 
-`.claude/skills` は `.agents/skills` へのシンボリックリンクです。
-Windows 環境ではシンボリックリンクが正しく展開されない場合があります。
-その場合は以下のいずれかで対応してください:
+Dev Containerを使用することを推奨します。
+Dev Containerならば、以下のツールが自動でインストールされます。
 
-- WSL2 上で作業する（推奨）
-- `.claude/skills/` を削除し、`.agents/skills/` の内容をコピーする
+- **Node.js** — WordPress MCP サーバーの実行に必要
+- **uv** — アイキャッチ画像生成スクリプト等の Python ツール実行に必要（https://docs.astral.sh/uv/）
+- **agent-browser** (推奨) — ブラウザのスクリーンショット撮影に使用（https://github.com/vercel-labs/agent-browser）
 
-## 使い方
+## Windows の場合
 
-Claude Code または Cursor で、ブログに関する作業を依頼してください。
-エージェントが `AGENTS.md` のワークフローに従って対応します。
+LinuxやMacを想定しています。
+Windowsの場合、次の環境を利用することを推奨します。
 
-```
-ネタを相談したい。〇〇について
-検証計画を立てたい
-記事を書いて
-WordPressに投稿して
-```
-
-## ディレクトリ構造
-
-```
-project.yaml                  # プロジェクトのメタデータ・状態管理
-NOTES.md                      # 検証ノート（全ての記録を集約）
-AGENTS.md                     # AIエージェントへの共通ルール
-CLAUDE.md                     # Claude Code 用（AGENTS.mdをインポート）
-poc/                           # 検証コード
-blog/                          # ブログ記事
-  <article-id>/
-    draft.md                   # 記事の下書き
-    images/                    # 記事用の画像
-.mcp.json                      # Claude Code用MCP設定
-.agents/
-  references/                  # ワークフロー詳細ドキュメント
-  templates/                   # 記事テンプレート
-  skills/                      # スキル（eyecatch, screenshot等）
-.claude/skills -> .agents/skills  # Claude Code 用シンボリックリンク
-.cursor/
-  mcp.json                     # Cursor用MCP設定
-```
-
-## ワークフロー
-
-```
-idea -> poc -> draft -> posted
-```
-
-1. **idea**: 記事のアイデアを練る
-2. **poc**: 技術検証を実施する（検証結果は NOTES.md に記録される）
-3. **draft**: 検証結果からブログ記事を書く
-4. **posted**: WordPressに下書き投稿する（以降のレビュー・公開はWordPress側で行う）
+- Dev Container
+- WSL2

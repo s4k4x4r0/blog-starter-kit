@@ -11,24 +11,35 @@ poc/            # 検証コード
 blog/           # ブログ記事（記事ごとにサブディレクトリ）
 ```
 
-## セッション開始時
-
-1. `project.yaml` で現在のフェーズと記事の状態を把握する
-2. `NOTES.md` で検証の進捗と方針を把握する
-3. `poc/` のコードで検証の現状を把握する
-
 ## ワークフロー
 
-記事の状態は `project.yaml` の `phase` で管理します。ユーザーの意図と現在の phase に応じて、適切なアクションを実行してください。判断に迷ったらユーザーに確認してください。
+記事の状態は `project.yaml` の `phase` で管理します。
 
-| ユーザーの意図 | 参照ファイル | phase 遷移 |
-|---|---|---|
-| ネタ相談、アイデア出し、方向性の議論 | [ideation.md](.agents/references/ideation.md) | → `idea` → `poc` |
-| 検証計画、PoC設計 | [poc-planning.md](.agents/references/poc-planning.md) | `poc` のまま |
-| 記事を書く、下書き作成 | [writing.md](.agents/references/writing.md) | → `draft` |
-| WordPressに投稿 | [publishing.md](.agents/references/publishing.md) | → `posted` |
+**セッション開始時は、必ず以下を行うこと:**
 
-phase の遷移: `idea → poc → draft → posted`
+1. `project.yaml` で現在の phase を確認する
+2. 対応するリファレンスファイルを読み込む
+3. リファレンスに定義されたフローに従ってユーザーを案内する
+
+### phase とリファレンス
+
+| phase | リファレンス |
+|---|---|
+| (記事なし) | [ideation.md](.agents/references/ideation.md) |
+| `idea_completed` | [poc.md](.agents/references/poc.md) |
+| `poc_completed` | [writing.md](.agents/references/writing.md) |
+| `draft_completed` | [publishing.md](.agents/references/publishing.md) |
+| `posted` | — 投稿済み。修正や新しい記事の作成に対応する |
+
+```
+(記事なし) → idea_completed → poc_completed → draft_completed → posted
+```
+
+**リファレンスにはフローの各ステップ、ユーザーへの案内テンプレート、phase 遷移条件が定義されている。エージェントはリファレンスのフローに従ってユーザーを主導すること。** ユーザーの指示を待つのではなく、次に何をすべきかをエージェントから提示する。
+
+### ユーザーが別の作業を望む場合
+
+ユーザーが現在の phase と異なる作業を指示した場合（例: 検証中だが先に記事を書きたい）、そのまま対応してよい。phase の順序は目安であり、厳密に守る必要はない。
 
 ## NOTES.md の記録
 
@@ -40,12 +51,22 @@ NOTES.md はこのプロジェクトの最重要ドキュメントです。書�
 - **こまめに書く** — ディスカッションで決定したらすぐ、検証結果が出たらすぐ記録する
 - **調査セクションは確定事実として維持する** — 後で訂正が見つかったら元の記述を更新する
 
-## AWS CLIアクセス
+## コミット
 
-`aws` コマンドを実行する前に、必ず [aws-access.md](.agents/references/aws-access.md) の手順でユーザーに認証してもらうこと。このプロジェクトでは長期アクセスキーを使わず、`aws login` による一時認証情報のみを使用する。
+**エージェントはユーザーの指示を待たず、適切なタイミングで能動的にコミットすること。**
 
-## コミットルール
+### タイミング
 
-- 検証コードのコミットは通常通り行う
-- `NOTES.md` と `project.yaml` の更新もコミットに含める
+以下のタイミングでコミットする:
+
+- NOTES.md や project.yaml に記録を書き込んだとき
+- 検証で TODO を1つ完了したとき
+- 下書きの作成・修正が一区切りついたとき
+- phase を更新したとき
+
+迷ったら細かくコミットする方を選ぶ。作業が失われるリスクを最小化する。
+
+### ルール
+
+- `NOTES.md` と `project.yaml` の変更は関連するコードと一緒にコミットする
 - コミット前に `.git/hooks/pre-commit` が存在するか確認し、なければ `pre-commit install` を実行する（gitleaks によるシークレット漏洩防止）

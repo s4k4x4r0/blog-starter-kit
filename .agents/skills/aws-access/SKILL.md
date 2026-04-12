@@ -1,6 +1,11 @@
-# AWS CLIアクセス
+---
+name: aws-access
+description: AWS CLIの一時認証情報を取得する。`aws` コマンドを実行する前に必ずこのスキルを使用すること。「AWS認証」「aws login」「AWSにアクセス」など、AWS CLIの認証が必要な場面で使用する。
+---
 
-aws loginで一時認証情報を使う。長期アクセスキーは使用禁止。
+# aws-access: AWS CLI認証スキル
+
+aws login で一時認証情報を使う。長期アクセスキーは使用禁止。
 
 ## 手順
 

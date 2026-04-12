@@ -5,6 +5,6 @@ title: ""              # プロジェクトのタイトル（例: "Lambda Durabl
 # articles:
 #   - id: lambda-durable-functions       # 記事ID（blog/ 配下のディレクトリ名）
 #     title: "Lambda Durable Functionを試してみた"
-#     phase: draft                        # idea | poc | draft | posted
+#     phase: idea_completed               # idea_completed | poc_completed | draft_completed | posted
 #     wordpress_post_id: null             # 投稿後にセットされる
 articles: []
