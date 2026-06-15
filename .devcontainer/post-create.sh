@@ -7,4 +7,5 @@ set -euo pipefail
 pre-commit install
 
 # agent-browser skill
-npx -y skills add vercel-labs/agent-browser --skill agent-browser --agent claude-code cursor --yes
+# skills CLI とスキル本体(agent-browserリポジトリ)の両方をバージョン/commit SHAで固定する
+npx -y skills@1.5.11 add vercel-labs/agent-browser#2c7991c9eccca1c9db6eee1a26a713414778de5a --skill agent-browser --agent claude-code cursor --yes
