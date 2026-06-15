@@ -25,14 +25,14 @@ RUN ARCH=$(uname -m) \
     && rm -rf awscliv2.zip aws
 
 # agent-browser + Chromium (グローバルインストール + システム依存)
-RUN npm install -g agent-browser \
-    && npx -y playwright install --with-deps chromium
+RUN npm install -g agent-browser@0.27.3 \
+    && npx -y playwright@1.61.0 install --with-deps chromium
 
 # textlint (グローバルインストール — hooks/textlint-draft.sh で使用)
 RUN npm install -g \
-    textlint \
-    textlint-rule-preset-ja-technical-writing \
-    @textlint-ja/textlint-rule-preset-ai-writing
+    textlint@15.7.1 \
+    textlint-rule-preset-ja-technical-writing@12.0.2 \
+    @textlint-ja/textlint-rule-preset-ai-writing@1.7.0
 
 # ============================================================
 # vscode: ユーザーレベルのツール
