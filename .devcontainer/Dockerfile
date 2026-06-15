@@ -15,6 +15,11 @@ RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key \
     && apt-get update && apt-get install -y nodejs \
     && rm -rf /var/lib/apt/lists/*
 
+# pnpm（Nodeパッケージをプロジェクトローカルに一元管理）。
+# バージョンは package.json の packageManager フィールドで固定し、corepackで取得する。
+RUN corepack enable
+ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
+
 # uv (公式Docker imageからバイナリコピー)
 COPY --from=ghcr.io/astral-sh/uv:0.11.21@sha256:ff07b86af50d4d9391d9daf4ff89ce427bc544f9aae87057e69a1cc0aa369946 /uv /uvx /usr/local/bin/
 ENV UV_LINK_MODE=copy
@@ -28,15 +33,10 @@ RUN ARCH=$(uname -m) \
     && ./aws/install \
     && rm -rf awscliv2.zip aws
 
-# agent-browser + Chromium (グローバルインストール + システム依存)
-RUN npm install -g agent-browser@0.27.3 \
-    && npx -y playwright@1.61.0 install --with-deps chromium
-
-# textlint (グローバルインストール — hooks/textlint-draft.sh で使用)
-RUN npm install -g \
-    textlint@15.7.1 \
-    textlint-rule-preset-ja-technical-writing@12.0.2 \
-    @textlint-ja/textlint-rule-preset-ai-writing@1.7.0
+# Chromium の OS 依存ライブラリ（root権限が必要なため、ここで apt 導入する）。
+# ブラウザバイナリ本体・agent-browser・textlint 等の Node ツールは pnpm で
+# プロジェクトローカルに導入する（post-create.sh の pnpm install / playwright install）。
+RUN npx -y playwright@1.61.0 install-deps chromium
 
 # ============================================================
 # vscode: ユーザーレベルのツール
