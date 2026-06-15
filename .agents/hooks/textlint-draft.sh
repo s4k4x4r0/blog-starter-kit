@@ -19,9 +19,10 @@ if [ ! -f "$FILE_PATH" ]; then
   exit 0
 fi
 
-# textlint 実行
-if command -v textlint &>/dev/null; then
-  RESULT=$(textlint --no-color "$FILE_PATH" 2>&1)
+# textlint 実行（プロジェクトローカルの pnpm を優先。非devcontainer等でpnpm非導入なら
+# lockfile相当のバージョンを固定した npx フォールバックを使う）
+if command -v pnpm &>/dev/null; then
+  RESULT=$(pnpm exec textlint --no-color "$FILE_PATH" 2>&1)
 else
   RESULT=$(npx -y \
     -p textlint@15.7.1 \
