@@ -34,14 +34,20 @@ RUN ARCH=$(uname -m) \
     && rm -rf awscliv2.zip aws
 
 # Chromium の OS 依存ライブラリ（root権限が必要なため apt で導入）。
-# Node ツール一式(agent-browser/textlint 等)とブラウザバイナリ本体は、
-# .agents/tools/ の pnpm でプロジェクトローカルに導入する（post-create.sh を参照）。
+# Node ツール一式(agent-browser/textlint 等)は .agents/tools/ の pnpm で
+# プロジェクトローカルに導入する（post-create.sh を参照）。
 RUN npx -y playwright@1.60.0 install-deps chromium
 
 # ============================================================
 # vscode: ユーザーレベルのツール
 # ============================================================
 USER vscode
+
+# Chromium ブラウザバイナリをイメージに焼き込む。
+# 格納先 ~/.cache/ms-playwright はワークスペースのバインドマウント外なので、
+# node_modules と違い実行時もそのまま使える（コンテナ生成が速くなりオフラインでも動く）。
+# バージョンは .agents/tools/ の playwright と必ず揃えること。
+RUN npx -y playwright@1.60.0 install chromium
 
 # Python
 RUN uv python install 3.13

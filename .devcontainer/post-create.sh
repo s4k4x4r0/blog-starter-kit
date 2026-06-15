@@ -8,8 +8,7 @@ set -euo pipefail
 # packageManager を効かせるため tools ディレクトリに cd して実行する。
 ( cd .agents/tools && pnpm install --frozen-lockfile )
 
-# Chromium ブラウザバイナリ（OS依存ライブラリはイメージビルド時に導入済み）
-.agents/tools/node_modules/.bin/playwright install chromium
+# Chromium ブラウザバイナリ・OS依存ライブラリはイメージビルド時に導入済み（Dockerfile参照）
 
 # git hooks (gitleaks等)
 pre-commit install
