@@ -33,21 +33,23 @@ RUN ARCH=$(uname -m) \
     && ./aws/install \
     && rm -rf awscliv2.zip aws
 
-# Chromium の OS 依存ライブラリ（root権限が必要なため apt で導入）。
-# Node ツール一式(agent-browser/textlint 等)は .agents/tools/ の pnpm で
-# プロジェクトローカルに導入する（post-create.sh を参照）。
-RUN npx -y playwright@1.60.0 install-deps chromium
+# Chromium ブラウザ（agent-browser が使用）。
+# apt 版は arm64/x64 両対応で依存ライブラリも一緒に入る。Chrome for Testing は
+# Linux ARM64 ビルドが無く agent-browser install が arm64 で失敗するため、apt で導入する。
+# agent-browser には下の AGENT_BROWSER_EXECUTABLE_PATH で実行パスを渡す。
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends chromium \
+    && rm -rf /var/lib/apt/lists/*
+ENV AGENT_BROWSER_EXECUTABLE_PATH=/usr/bin/chromium
 
 # ============================================================
 # vscode: ユーザーレベルのツール
 # ============================================================
 USER vscode
 
-# Chromium ブラウザバイナリをイメージに焼き込む。
-# 格納先 ~/.cache/ms-playwright はワークスペースのバインドマウント外なので、
-# node_modules と違い実行時もそのまま使える（コンテナ生成が速くなりオフラインでも動く）。
-# バージョンは .agents/tools/ の playwright と必ず揃えること。
-RUN npx -y playwright@1.60.0 install chromium
+# uv tool（pre-commit 等）と Claude Code は ~/.local/bin に入る。post-create.sh は
+# 非ログインshellで実行されプロフィールが読まれないため、PATH を明示的に通しておく。
+ENV PATH="/home/vscode/.local/bin:${PATH}"
 
 # Python
 RUN uv python install 3.13

@@ -26,7 +26,7 @@ uv run .agents/skills/screenshot/scripts/check-agent-browser.py
 | 0 | 全て利用可能 | そのまま撮影に進む |
 | 1 | コマンド未導入 | ユーザーに agent-browser のインストール許可を求める（下記参照） |
 | 2 | スキル未導入 | ユーザーに agent-browser スキルのインストール許可を求める（下記参照） |
-| 3 | ブラウザ動作不可 | ユーザーに `agent-browser install` の実行を案内する |
+| 3 | ブラウザ動作不可 | システムに Chromium を導入し `AGENT_BROWSER_EXECUTABLE_PATH` を設定する（下記参照）|
 
 ### 未導入時の対応
 
@@ -37,7 +37,7 @@ uv run .agents/skills/screenshot/scripts/check-agent-browser.py
 ユーザーに「agent-browser をインストールしてよいですか？」と確認し、許可を得てから実行する:
 
 ```bash
-npm install -g agent-browser@0.27.3 && agent-browser install
+npm install -g agent-browser@0.27.3
 ```
 
 **スキルが未導入の場合（終了コード 2）:**
@@ -46,6 +46,16 @@ npm install -g agent-browser@0.27.3 && agent-browser install
 
 ```bash
 npx skills add vercel-labs/agent-browser --skill agent-browser --agent claude-code cursor --yes
+```
+
+**ブラウザが動作しない場合（終了コード 3）:**
+
+agent-browser には Chromium が必要。`agent-browser install`（Chrome for Testing）は Linux ARM64 に
+非対応なので、システムの Chromium を使う方法を案内する（Dev Container では導入・設定済みのため不要）:
+
+```bash
+sudo apt-get install -y chromium    # Debian/Ubuntu。Fedora は: sudo dnf install chromium
+export AGENT_BROWSER_EXECUTABLE_PATH=/usr/bin/chromium
 ```
 
 インストール後、チェックスクリプトを再実行して全て通ることを確認する。

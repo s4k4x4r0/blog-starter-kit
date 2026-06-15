@@ -47,10 +47,10 @@ AIエージェントと対話するだけで、技術ブログの企画から Wo
    ```bash
    corepack enable                       # pnpm を有効化（バージョンは packageManager で固定）
    ( cd .agents/tools && pnpm install --frozen-lockfile )
-   .agents/tools/node_modules/.bin/playwright install chromium
    # 任意: ツールを PATH に通すと `textlint` 等を直接呼べる
    #   export PATH="$PWD/.agents/tools/node_modules/.bin:$PATH"
    ```
+   スクリーンショット機能を使う場合は別途 Chromium が必要です（screenshot スキルが案内します）。
 5. エディタを再起動する（Claude Code: ターミナル再起動、Cursor: アプリ再起動）
 
 ## 推奨環境
