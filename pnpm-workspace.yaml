@@ -1,0 +1,15 @@
+# pnpm のサプライチェーン強化設定（pnpm 11 はこのファイルで設定を管理する）
+
+# 依存パッケージのビルドスクリプト(postinstall 等)は既定で全て遮断し、
+# 明示的に許可したものだけ実行する（悪意ある postinstall の防御）。
+allowBuilds:
+  # agent-browser は Rust 製 CLI バイナリを postinstall で取得するため必須
+  agent-browser: true
+
+# 公開直後（=乗っ取り直後の可能性がある）のバージョンを既定で避ける。
+# 単位は分。1440 = 1日。新規解決時のみ作用し、frozen-lockfile install には影響しない。
+minimumReleaseAge: 1440
+# 既にピン留め済みの新しいバージョンはゲートを通す。
+minimumReleaseAgeExclude:
+  - playwright-core@1.61.0
+  - playwright@1.61.0

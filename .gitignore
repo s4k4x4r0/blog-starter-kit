@@ -12,6 +12,9 @@
 # Claude Code local settings
 .claude/settings.local.json
 
+# Node (pnpm でプロジェクトローカル管理。pnpm-lock.yaml はコミットする)
+node_modules/
+
 # Python tools cache
 .ruff_cache/
 __pycache__/
