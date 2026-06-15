@@ -1,7 +1,7 @@
 #!/usr/bin/env -S uv --quiet run --script
 # /// script
 # requires-python = "==3.13.*"
-# dependencies = ["httpx"]
+# dependencies = ["httpx==0.28.1"]
 # ///
 """
 AWS マネジメントコンソールのフェデレーションサインイン URL を生成する。

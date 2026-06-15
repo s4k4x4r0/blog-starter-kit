@@ -1,10 +1,12 @@
-FROM mcr.microsoft.com/devcontainers/base:debian-12
+FROM mcr.microsoft.com/devcontainers/base:debian-12@sha256:23fa69fed758b7927c60061317d73baf7d66b9fca5c344e80bce3a940b229af0
 
 # ============================================================
 # root: システムパッケージとグローバルバイナリ
 # ============================================================
 
 # Node.js LTS (NodeSource APTリポジトリ)
+# 注: GPG署名付きNodeSourceリポジトリ + メジャー固定とする。patchまで固定すると
+# NodeSourceが旧patchをリポジトリから削除した際にビルドが壊れるため、あえて固定しない。
 ARG NODE_MAJOR=22
 RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key \
       | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg \
@@ -13,38 +15,50 @@ RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key \
     && apt-get update && apt-get install -y nodejs \
     && rm -rf /var/lib/apt/lists/*
 
+# pnpm（Nodeパッケージをプロジェクトローカルに一元管理）。
+# バージョンは package.json の packageManager フィールドで固定し、corepackで取得する。
+RUN corepack enable
+ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
+
 # uv (公式Docker imageからバイナリコピー)
-COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /usr/local/bin/
+COPY --from=ghcr.io/astral-sh/uv:0.11.21@sha256:ff07b86af50d4d9391d9daf4ff89ce427bc544f9aae87057e69a1cc0aa369946 /uv /uvx /usr/local/bin/
 ENV UV_LINK_MODE=copy
 
-# AWS CLI v2 (公式インストーラー)
+# AWS CLI v2 (公式インストーラー — バージョン別URLで固定)
+# 注: GPG署名検証も可能だが公開鍵管理が増えるため、バージョン固定で再現性を確保する方針とする
+ARG AWSCLI_VERSION=2.35.4
 RUN ARCH=$(uname -m) \
-    && curl "https://awscli.amazonaws.com/awscli-exe-linux-${ARCH}.zip" -o "awscliv2.zip" \
+    && curl "https://awscli.amazonaws.com/awscli-exe-linux-${ARCH}-${AWSCLI_VERSION}.zip" -o "awscliv2.zip" \
     && unzip awscliv2.zip \
     && ./aws/install \
     && rm -rf awscliv2.zip aws
 
-# agent-browser + Chromium (グローバルインストール + システム依存)
-RUN npm install -g agent-browser \
-    && npx -y playwright install --with-deps chromium
-
-# textlint (グローバルインストール — hooks/textlint-draft.sh で使用)
-RUN npm install -g \
-    textlint \
-    textlint-rule-preset-ja-technical-writing \
-    @textlint-ja/textlint-rule-preset-ai-writing
+# Chromium ブラウザ（agent-browser が使用）。
+# apt 版は arm64/x64 両対応で依存ライブラリも一緒に入る。Chrome for Testing は
+# Linux ARM64 ビルドが無く agent-browser install が arm64 で失敗するため、apt で導入する。
+# agent-browser には下の AGENT_BROWSER_EXECUTABLE_PATH で実行パスを渡す。
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends chromium \
+    && rm -rf /var/lib/apt/lists/*
+ENV AGENT_BROWSER_EXECUTABLE_PATH=/usr/bin/chromium
 
 # ============================================================
 # vscode: ユーザーレベルのツール
 # ============================================================
 USER vscode
 
+# uv tool（pre-commit 等）と Claude Code は ~/.local/bin に入る。post-create.sh は
+# 非ログインshellで実行されプロフィールが読まれないため、PATH を明示的に通しておく。
+ENV PATH="/home/vscode/.local/bin:${PATH}"
+
 # Python
 RUN uv python install 3.13
 
 # pre-commit
-RUN uv tool install pre-commit
+RUN uv tool install pre-commit==4.6.0
 
 # Claude Code (公式インストーラー)
+# 注: 自己更新型の開発ツールのため意図的にバージョン固定しない（常に最新を導入）。
+#     固定したい場合は `| bash -s -- <version>` でバージョン指定が可能。
 # WORKDIRが / だとスキャンでハングするため専用の一時ディレクトリで実行する
 RUN WORK=$(mktemp -d) && cd "$WORK" && curl -fsSL https://claude.ai/install.sh | bash && rm -rf "$WORK"

@@ -12,11 +12,17 @@
 # Claude Code local settings
 .claude/settings.local.json
 
+# Node (ツールは .agents/tools/ に隔離。pnpm-lock.yaml はコミットする)
+node_modules/
+# pnpm がコンテナ内(別FS)で生成するストアキャッシュ
+.pnpm-store/
+
 # Python tools cache
 .ruff_cache/
 __pycache__/
 
 .tmp/
 
-# Third-party skills (installed via skills-lock.json)
+# Third-party skills（post-create で commit SHA 固定して install するため追跡しない）
 .agents/skills/agent-browser/
+skills-lock.json

@@ -42,16 +42,25 @@ AIエージェントと対話するだけで、技術ブログの企画から Wo
    cp .env.example .env
    ```
    `.env` に WordPress の認証情報を記入する
-4. エディタを再起動する（Claude Code: ターミナル再起動、Cursor: アプリ再起動）
+4. Node ツールをインストールする（**Dev Container を使う場合はこの手順は自動実行されるため不要**）。
+   ツール一式は `.agents/tools/` に隔離されており、リポジトリ直下や `poc/` には影響しません:
+   ```bash
+   corepack enable                       # pnpm を有効化（バージョンは packageManager で固定）
+   ( cd .agents/tools && pnpm install --frozen-lockfile )
+   # 任意: ツールを PATH に通すと `textlint` 等を直接呼べる
+   #   export PATH="$PWD/.agents/tools/node_modules/.bin:$PATH"
+   ```
+   スクリーンショット機能を使う場合は別途 Chromium が必要です（screenshot スキルが案内します）。
+5. エディタを再起動する（Claude Code: ターミナル再起動、Cursor: アプリ再起動）
 
 ## 推奨環境
 
 Dev Containerを使用することを推奨します。
 Dev Containerならば、以下のツールが自動でインストールされます。
 
-- **Node.js** — WordPress MCP サーバーの実行に必要
+- **Node.js + pnpm** — WordPress MCP サーバーの実行や Node ツール（textlint・agent-browser 等）に必要。Node パッケージは `package.json` / `pnpm-lock.yaml` でプロジェクトローカルに固定管理する
 - **uv** — アイキャッチ画像生成スクリプト等の Python ツール実行に必要（https://docs.astral.sh/uv/）
-- **agent-browser** (推奨) — ブラウザのスクリーンショット撮影に使用（https://github.com/vercel-labs/agent-browser）
+- **agent-browser** (推奨) — ブラウザのスクリーンショット撮影に使用。Dev Container では自動導入され、それ以外の環境では screenshot スキルが必要時に導入を案内する（https://github.com/vercel-labs/agent-browser）
 
 ## Windows の場合
 
