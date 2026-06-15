@@ -2,7 +2,7 @@
   "mcpServers": {
     "wordpress": {
       "command": ".agents/tools/node_modules/.bin/dotenv",
-      "args": ["--", "npx", "-y", "github:cloudbuilders-jp/mcp-wordpress-server#949a1e1f086f50462c4380bdc415c31e349dfe62"],
+      "args": ["--", ".agents/tools/node_modules/.bin/mcp-wordpress-server"],
       "env": {
         "WORDPRESS_URL": "https://www.cloudbuilders.jp/"
       }

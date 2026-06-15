@@ -5,3 +5,10 @@
 allowBuilds:
   # agent-browser は Rust 製 CLI バイナリを postinstall で配置するため許可する
   agent-browser: true
+  # mcp-wordpress-server は dist/ を同梱せず prepare(=tsc build) で生成するため許可する
+  mcp-wordpress-server@https://codeload.github.com/cloudbuilders-jp/mcp-wordpress-server/tar.gz/949a1e1f086f50462c4380bdc415c31e349dfe62: true
+  # 以下は mcp-wordpress-server の推移的実行時依存。元の npx 方式でも実行されていた
+  # ビルドスクリプト（sharp はネイティブバイナリ配置など）なので許可する。
+  '@google/genai': true
+  protobufjs: true
+  sharp: true

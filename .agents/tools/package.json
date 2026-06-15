@@ -10,6 +10,7 @@
     "@textlint-ja/textlint-rule-preset-ai-writing": "1.7.0",
     "agent-browser": "0.27.3",
     "dotenv-cli": "11.0.0",
+    "mcp-wordpress-server": "github:cloudbuilders-jp/mcp-wordpress-server#949a1e1f086f50462c4380bdc415c31e349dfe62",
     "skills": "1.5.11",
     "textlint": "15.7.1",
     "textlint-rule-preset-ja-technical-writing": "12.0.2"
