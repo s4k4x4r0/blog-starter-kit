@@ -42,16 +42,22 @@ AIエージェントと対話するだけで、技術ブログの企画から Wo
    cp .env.example .env
    ```
    `.env` に WordPress の認証情報を記入する
-4. エディタを再起動する（Claude Code: ターミナル再起動、Cursor: アプリ再起動）
+4. Node 依存をインストールする（**Dev Container を使う場合はこの手順は自動実行されるため不要**）:
+   ```bash
+   corepack enable      # pnpm を有効化（バージョンは package.json の packageManager で固定）
+   pnpm install --frozen-lockfile
+   pnpm exec playwright install chromium
+   ```
+5. エディタを再起動する（Claude Code: ターミナル再起動、Cursor: アプリ再起動）
 
 ## 推奨環境
 
 Dev Containerを使用することを推奨します。
 Dev Containerならば、以下のツールが自動でインストールされます。
 
-- **Node.js** — WordPress MCP サーバーの実行に必要
+- **Node.js + pnpm** — WordPress MCP サーバーの実行や Node ツール（textlint・agent-browser 等）に必要。Node パッケージは `package.json` / `pnpm-lock.yaml` でプロジェクトローカルに固定管理する
 - **uv** — アイキャッチ画像生成スクリプト等の Python ツール実行に必要（https://docs.astral.sh/uv/）
-- **agent-browser** (推奨) — ブラウザのスクリーンショット撮影に使用（https://github.com/vercel-labs/agent-browser）
+- **agent-browser** (推奨) — ブラウザのスクリーンショット撮影に使用。pnpm でローカル導入される（https://github.com/vercel-labs/agent-browser）
 
 ## Windows の場合
 
