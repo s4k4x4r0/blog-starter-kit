@@ -1,7 +1,7 @@
 #!/usr/bin/env -S uv --quiet run --script
 # /// script
-# requires-python = ">=3.10"
-# dependencies = ["Pillow"]
+# requires-python = "==3.13.*"
+# dependencies = ["Pillow==12.2.0"]
 # ///
 """
 make_eyecatch.py - ブログアイキャッチ画像生成

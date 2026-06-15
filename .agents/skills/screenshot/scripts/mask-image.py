@@ -1,7 +1,7 @@
 #!/usr/bin/env -S uv --quiet run --script
 # /// script
 # requires-python = "==3.13.*"
-# dependencies = ["Pillow"]
+# dependencies = ["Pillow==12.2.0"]
 # ///
 """
 画像の指定領域を黒い矩形でマスクする。マスク前のオリジナルは /tmp/screenshots/ に自動退避する。
