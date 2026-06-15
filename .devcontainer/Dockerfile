@@ -36,7 +36,7 @@ RUN ARCH=$(uname -m) \
 # Chromium の OS 依存ライブラリ（root権限が必要なため、ここで apt 導入する）。
 # ブラウザバイナリ本体・agent-browser・textlint 等の Node ツールは pnpm で
 # プロジェクトローカルに導入する（post-create.sh の pnpm install / playwright install）。
-RUN npx -y playwright@1.61.0 install-deps chromium
+RUN npx -y playwright@1.60.0 install-deps chromium
 
 # ============================================================
 # vscode: ユーザーレベルのツール
