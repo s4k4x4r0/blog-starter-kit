@@ -24,9 +24,9 @@ if command -v textlint &>/dev/null; then
   RESULT=$(textlint --no-color "$FILE_PATH" 2>&1)
 else
   RESULT=$(npx -y \
-    -p textlint \
-    -p textlint-rule-preset-ja-technical-writing \
-    -p @textlint-ja/textlint-rule-preset-ai-writing \
+    -p textlint@15.7.1 \
+    -p textlint-rule-preset-ja-technical-writing@12.0.2 \
+    -p @textlint-ja/textlint-rule-preset-ai-writing@1.7.0 \
     textlint --no-color "$FILE_PATH" 2>&1)
 fi
 

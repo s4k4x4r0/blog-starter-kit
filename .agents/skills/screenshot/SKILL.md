@@ -37,7 +37,7 @@ uv run .agents/skills/screenshot/scripts/check-agent-browser.py
 ユーザーに「agent-browser をインストールしてよいですか？」と確認し、許可を得てから実行する:
 
 ```bash
-npm install -g agent-browser && agent-browser install
+npm install -g agent-browser@0.27.3 && agent-browser install
 ```
 
 **スキルが未導入の場合（終了コード 2）:**
