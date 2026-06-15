@@ -1,13 +1,14 @@
 {
-  "name": "cb-blog-template",
+  "name": "cb-blog-template-tools",
   "private": true,
-  "description": "AIエージェントと対話して技術ブログを企画・検証・執筆・投稿するテンプレート",
+  "description": "テンプレートのハーネスが使う Node ツール一式（ユーザーのプロジェクトとは分離）",
   "packageManager": "pnpm@11.7.0",
   "engines": {
     "node": ">=22"
   },
   "devDependencies": {
     "@textlint-ja/textlint-rule-preset-ai-writing": "1.7.0",
+    "agent-browser": "0.27.3",
     "dotenv-cli": "11.0.0",
     "playwright": "1.60.0",
     "skills": "1.5.11",

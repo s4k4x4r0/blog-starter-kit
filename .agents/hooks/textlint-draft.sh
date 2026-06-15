@@ -19,10 +19,11 @@ if [ ! -f "$FILE_PATH" ]; then
   exit 0
 fi
 
-# textlint 実行（プロジェクトローカルの pnpm を優先。非devcontainer等でpnpm非導入なら
+# textlint 実行（.agents/tools のローカル導入を優先。未導入環境では
 # lockfile相当のバージョンを固定した npx フォールバックを使う）
-if command -v pnpm &>/dev/null; then
-  RESULT=$(pnpm exec textlint --no-color "$FILE_PATH" 2>&1)
+TEXTLINT_BIN="${CLAUDE_PROJECT_DIR:-.}/.agents/tools/node_modules/.bin/textlint"
+if [ -x "$TEXTLINT_BIN" ]; then
+  RESULT=$("$TEXTLINT_BIN" --no-color "$FILE_PATH" 2>&1)
 else
   RESULT=$(npx -y \
     -p textlint@15.7.1 \

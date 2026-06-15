@@ -42,11 +42,14 @@ AIエージェントと対話するだけで、技術ブログの企画から Wo
    cp .env.example .env
    ```
    `.env` に WordPress の認証情報を記入する
-4. Node 依存をインストールする（**Dev Container を使う場合はこの手順は自動実行されるため不要**）:
+4. Node ツールをインストールする（**Dev Container を使う場合はこの手順は自動実行されるため不要**）。
+   ツール一式は `.agents/tools/` に隔離されており、リポジトリ直下や `poc/` には影響しません:
    ```bash
-   corepack enable      # pnpm を有効化（バージョンは package.json の packageManager で固定）
-   pnpm install --frozen-lockfile
-   pnpm exec playwright install chromium
+   corepack enable                       # pnpm を有効化（バージョンは packageManager で固定）
+   ( cd .agents/tools && pnpm install --frozen-lockfile )
+   .agents/tools/node_modules/.bin/playwright install chromium
+   # 任意: ツールを PATH に通すと `textlint` 等を直接呼べる
+   #   export PATH="$PWD/.agents/tools/node_modules/.bin:$PATH"
    ```
 5. エディタを再起動する（Claude Code: ターミナル再起動、Cursor: アプリ再起動）
 

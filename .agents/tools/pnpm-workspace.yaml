@@ -1,0 +1,7 @@
+# このファイルがあることで .agents/tools/ が pnpm のワークスペースルートになる。
+# 設定は .agents/tools/ 内に閉じるため、リポジトリ直下や poc/ には一切影響しない。
+#
+# 依存のビルドスクリプト(postinstall 等)は既定で全て遮断し、明示許可したものだけ実行する。
+allowBuilds:
+  # agent-browser は Rust 製 CLI バイナリを postinstall で配置するため許可する
+  agent-browser: true

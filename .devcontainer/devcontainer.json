@@ -6,5 +6,8 @@
   "features": {
     "ghcr.io/devcontainers/features/sshd:1.1.0": {}
   },
+  "remoteEnv": {
+    "PATH": "${containerWorkspaceFolder}/.agents/tools/node_modules/.bin:${containerEnv:PATH}"
+  },
   "postCreateCommand": ".devcontainer/post-create.sh"
 }
