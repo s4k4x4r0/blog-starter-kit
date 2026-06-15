@@ -6,7 +6,9 @@ set -euo pipefail
 # ハーネスが使う Node ツールを .agents/tools/ にローカル導入（pnpm-lock.yaml で全ツリー固定）。
 # --frozen-lockfile: lockfileと不一致なら失敗させ、こっそりした差し替えを拒否する。
 # packageManager を効かせるため tools ディレクトリに cd して実行する。
-( cd .agents/tools && pnpm install --frozen-lockfile )
+# CI=true: ホスト側(別OS)の node_modules がバインドマウントで見える場合に、pnpm が
+#          非対話で作り直せるようにする（TTYが無い post-create で確認プロンプトを回避）。
+( cd .agents/tools && CI=true pnpm install --frozen-lockfile )
 
 # git hooks (gitleaks等)
 pre-commit install
