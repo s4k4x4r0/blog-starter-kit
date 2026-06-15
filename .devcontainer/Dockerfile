@@ -15,7 +15,7 @@ RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key \
     && apt-get update && apt-get install -y nodejs \
     && rm -rf /var/lib/apt/lists/*
 
-# uv (公式Docker imageからバイナリコピー — ダイジェスト固定: v0.11.21)
+# uv (公式Docker imageからバイナリコピー)
 COPY --from=ghcr.io/astral-sh/uv:0.11.21@sha256:ff07b86af50d4d9391d9daf4ff89ce427bc544f9aae87057e69a1cc0aa369946 /uv /uvx /usr/local/bin/
 ENV UV_LINK_MODE=copy
 
