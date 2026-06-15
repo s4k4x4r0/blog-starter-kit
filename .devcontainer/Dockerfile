@@ -33,9 +33,14 @@ RUN ARCH=$(uname -m) \
     && ./aws/install \
     && rm -rf awscliv2.zip aws
 
-# Chromium の OS 依存ライブラリ（root権限が必要なため、ここで apt 導入する）。
-# ブラウザバイナリ本体・agent-browser・textlint 等の Node ツールは pnpm で
-# プロジェクトローカルに導入する（post-create.sh の pnpm install / playwright install）。
+# agent-browser CLI（Rust製バイナリ）。ビルドスクリプト(postinstall)を持つため pnpm 依存に
+# すると pnpm-workspace.yaml が必須になり、poc/ 等に作る独立した pnpm プロジェクトを
+# ワークスペースに巻き込んでしまう。それを避けるためグローバル導入とする（バージョン固定）。
+RUN npm install -g agent-browser@0.27.3
+
+# Chromium の OS 依存ライブラリ（root権限が必要なため apt で導入）。
+# ブラウザバイナリ本体・textlint 等の他の Node ツールは pnpm でプロジェクトローカルに導入する
+# （post-create.sh の pnpm install / playwright install chromium）。
 RUN npx -y playwright@1.60.0 install-deps chromium
 
 # ============================================================

@@ -57,7 +57,7 @@ Dev Containerならば、以下のツールが自動でインストールされ�
 
 - **Node.js + pnpm** — WordPress MCP サーバーの実行や Node ツール（textlint・agent-browser 等）に必要。Node パッケージは `package.json` / `pnpm-lock.yaml` でプロジェクトローカルに固定管理する
 - **uv** — アイキャッチ画像生成スクリプト等の Python ツール実行に必要（https://docs.astral.sh/uv/）
-- **agent-browser** (推奨) — ブラウザのスクリーンショット撮影に使用。pnpm でローカル導入される（https://github.com/vercel-labs/agent-browser）
+- **agent-browser** (推奨) — ブラウザのスクリーンショット撮影に使用。Dev Container では自動導入され、それ以外の環境では screenshot スキルが必要時に導入を案内する（https://github.com/vercel-labs/agent-browser）
 
 ## Windows の場合
 
