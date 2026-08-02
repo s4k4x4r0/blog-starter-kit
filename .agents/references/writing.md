@@ -73,7 +73,15 @@ NOTES.md・poc/・project.yaml を確認し、以下のテンプレートでユ�
 
 ## Step 4: フェーズ完了確認
 
-以下のテンプレートで案内する:
+まず機械チェックを実行する:
+
+```bash
+.agents/scripts/check-phase.sh <article-id> draft_completed
+```
+
+このスクリプトは project.yaml への記事登録、draft.md の存在、本文が参照する画像の存在、textlint の合格を検証する。NG が出た場合は解消してから再実行し、合格を確認する。
+
+合格したら、以下のテンプレートで案内する:
 
 > 記事執筆フェーズはこれで完了でよいでしょうか？
 > よければ phase を `draft_completed` に更新します。次は WordPress への投稿に進むことができます。
@@ -85,6 +93,7 @@ NOTES.md・poc/・project.yaml を確認し、以下のテンプレートでユ�
 `draft_completed` に遷移するには、以下がすべて満たされていること:
 
 - `blog/<article-id>/draft.md` が作成されている
+- `.agents/scripts/check-phase.sh <article-id> draft_completed` が合格している
 - ユーザーが下書きの内容を確認し、合意している
 - サブエージェントによるレビューが完了している（ユーザーがスキップした場合は不要）
 - レビューを実施した場合、指摘事項について修正方針を合意し反映済みである

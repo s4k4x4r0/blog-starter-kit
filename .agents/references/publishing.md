@@ -10,13 +10,23 @@ MCP ツール（`create_post` 等）が使えない場合は、[mcp-setup.md](mc
 ## フロー概要
 
 ```
-Step 1: 投稿前チェック — 機密情報チェックとアイキャッチ画像の確認
+Step 1: 投稿前チェック — 機械チェック・機密情報チェック・アイキャッチ画像の確認
 Step 2: カテゴリ・タグの選定 — WordPress の既存カテゴリ・タグから選定し提案
 Step 3: 記事の投稿 — WordPress MCP で下書き投稿
 Step 4: フェーズ完了確認 — 投稿結果を伝え posted へ
 ```
 
 ## Step 1: 投稿前チェック
+
+### 機械チェック
+
+まず機械チェックを実行する:
+
+```bash
+.agents/scripts/check-phase.sh <article-id> posted
+```
+
+このスクリプトは project.yaml への記事登録、draft.md の存在、本文が参照する画像の存在、textlint の合格を検証する（アイキャッチ画像がない場合は WARN が出るが、後続のステップで対応するため、ここでは合否に影響しない）。NG が出た場合は解消してから次に進む。
 
 ### 機密情報チェック
 
@@ -95,6 +105,7 @@ WordPress MCP でカテゴリ一覧・タグ一覧を取得し、記事に合う
 
 `posted` に遷移するには、以下がすべて満たされていること:
 
+- `.agents/scripts/check-phase.sh <article-id> posted` が合格していること
 - 機密情報チェックが完了し、問題がないこと
 - WordPress に下書きとして投稿済みであること
 - ユーザーに投稿 URL を伝えていること
